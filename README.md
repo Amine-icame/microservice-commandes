@@ -30,7 +30,8 @@ Ce microservice est responsable de la gestion des opérations CRUD (Create, Read
     ```
     Le microservice sera accessible sur `http://localhost:8081` (port configuré via le Config Server).
 ## H2 Database
-<img width="1835" height="493" alt="image" src="https://github.com/user-attachments/assets/96248b75-bdba-420a-b93d-b646270ea7db" />
+<img width="1835" height="493" alt="Screenshot 2025-11-18 161603" src="https://github.com/user-attachments/assets/609c8d83-0490-4f29-9998-7f1c2bc1c802" />
+
 
 
 ## 💡 Configuration
@@ -54,12 +55,14 @@ Le préfixe pour toutes les routes est `/commandes`.
 | `GET`   | `/commandes/test-produit-delay/{seconds}` | Teste le Circuit Breaker de Resilience4j en appelant un endpoint lent de `microservice-produits`. | `N/A`                                                         |
 | `GET`   | `/commandes/config-info`                 | Affiche la valeur de la propriété `mes-config-ms.commandes-last`.            | `N/A`                                                         |
 
-<img width="1300" height="953" alt="image" src="https://github.com/user-attachments/assets/e65d6c3a-935f-40e4-8eaa-191e219a1f12" />
+<img width="1300" height="953" alt="Screenshot 2025-11-18 165133" src="https://github.com/user-attachments/assets/7e16b558-25e0-4063-8518-dea9c5d021bb" />
+
 
 ## 📊 Monitoring et Documentation
 
 -   **Swagger UI :** `http://localhost:8081/swagger-ui.html`
--   <img width="1818" height="1004" alt="image" src="https://github.com/user-attachments/assets/abaf3ead-6ad6-4ddd-9719-70df3f3a5111" />
+   <img width="1818" height="1004" alt="Screenshot 2025-11-18 161844" src="https://github.com/user-attachments/assets/27be41ee-f4a4-467f-af9c-08a3af686e9f" />
+
 
 -   **Actuator Endpoints :** `http://localhost:8081/actuator` (inclut `health`, `info`, `refresh`, `circuitbreakers`)
 
@@ -68,14 +71,17 @@ Le préfixe pour toutes les routes est `/commandes`.
 Pour tester le Circuit Breaker :
 1.  Assurez-vous que `microservice-produits` a son endpoint `/delay/{seconds}` fonctionnel.
 2.  Accédez à `http://localhost:8081/actuator/circuitbreakers` pour voir l'état initial (`CLOSED`).
-    <img width="1159" height="463" alt="image" src="https://github.com/user-attachments/assets/ce9f3c48-e5ec-4841-978f-fc7e0ced5533" />
+    <img width="1159" height="463" alt="Screenshot 2025-11-18 161951" src="https://github.com/user-attachments/assets/ec6992cf-f504-42d9-8032-cfca8949a29a" />
+
 
 4.  Envoyez plusieurs requêtes `POST` à `http://localhost:8081/actuator/refresh` pour recharger les propriétés Resilience4j depuis Git.
 5.  Envoyez plusieurs requêtes `GET http://localhost:8081/commandes/test-produit-delay/3` (le timeout est configuré à 2s). Vous devriez voir des réponses de fallback.
-   <img width="1274" height="724" alt="image" src="https://github.com/user-attachments/assets/9306f9ec-057a-4496-9ab1-3f40659320bd" />
+   <img width="1274" height="724" alt="Screenshot 2025-11-18 162129" src="https://github.com/user-attachments/assets/876af454-7817-4d59-83a2-3245c71f4870" />
+
 
 7.  Vérifiez à nouveau `http://localhost:8081/actuator/circuitbreakers`. Le Circuit Breaker devrait passer à l'état `OPEN`.
-    <img width="1276" height="878" alt="image" src="https://github.com/user-attachments/assets/8ea491b5-578b-47e8-b4c7-2df7be66141d" />
+    <img width="1276" height="878" alt="Screenshot 2025-11-18 162215" src="https://github.com/user-attachments/assets/fac43bb1-259c-4a69-92f4-c68bbb64c190" />
+
 
 ---
 
